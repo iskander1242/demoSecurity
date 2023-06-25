@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -29,15 +31,20 @@ public class SecurityConfig {
     public UserDetailsService users() {
         UserDetails user = User.builder()
                 .username("user")
-                .password("{bcrypt}$2a$09$qPX63SCpTR8SflKea4tLculUrLY08rjWK5U9czQxBV9FPuPT/m5y6")
-//                .password("{noop}123")
+//                .password("{bcrypt}$2a$09$qPX63SCpTR8SflKea4tLculUrLY08rjWK5U9czQxBV9FPuPT/m5y6")
+                .password("{noop}123")
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()
                 .username("admin")
-                .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
+                .password(passwordEncoder().encode("123"))
                 .roles("USER", "ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user, admin);
+    }
+
+    @Bean
+    protected PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
     }
 }
