@@ -45,3 +45,9 @@ mvn clean install
 ```shell
 mvn clean test
 ```
+
+## Open Api
+http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/v3/api-docs
+
+https://www.bezkoder.com/spring-boot-swagger-3/
